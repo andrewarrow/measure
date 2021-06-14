@@ -3,6 +3,7 @@ package gallons
 import (
 	"fmt"
 	"strconv"
+	"time"
 )
 
 func HandleInput(argMap map[string]string) {
@@ -28,7 +29,26 @@ func HandleInput(argMap map[string]string) {
 	yJug := NewJug("y", yGallons)
 	zJug := NewJug("z", zGallons)
 
-	fmt.Println(xJug.String())
-	fmt.Println(yJug.String())
-	fmt.Println(zJug.String())
+	for {
+
+		xJug.Fill()
+		yJug.Fill()
+
+		fmt.Println(xJug.String())
+		fmt.Println(yJug.String())
+		fmt.Println(zJug.String())
+
+		xJug.Transfer(zJug)
+		yJug.Transfer(zJug)
+
+		fmt.Println(xJug.String())
+		fmt.Println(yJug.String())
+		fmt.Println(zJug.String())
+
+		if zJug.GallonsOfWater == zJug.MaxSize {
+			break
+		}
+
+		time.Sleep(time.Second * 1)
+	}
 }
