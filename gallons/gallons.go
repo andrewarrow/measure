@@ -3,7 +3,6 @@ package gallons
 import (
 	"fmt"
 	"strconv"
-	"time"
 )
 
 func HandleInput(argMap map[string]string) {
@@ -29,26 +28,41 @@ func HandleInput(argMap map[string]string) {
 	yJug := NewJug("y", yGallons)
 	zJug := NewJug("z", zGallons)
 
+	// start with larger of x and y
+	larger := xJug
+	smaller := yJug
+	if yJug.MaxSize > xJug.MaxSize {
+		larger = yJug
+		smaller = xJug
+	}
+
+	fmt.Println(xJug.String())
+	fmt.Println(yJug.String())
+	fmt.Println(zJug.String())
+
 	for {
-
-		xJug.Fill()
-		yJug.Fill()
-
-		fmt.Println(xJug.String())
-		fmt.Println(yJug.String())
-		fmt.Println(zJug.String())
-
-		xJug.Transfer(zJug)
-		yJug.Transfer(zJug)
-
-		fmt.Println(xJug.String())
-		fmt.Println(yJug.String())
-		fmt.Println(zJug.String())
-
-		if zJug.GallonsOfWater == zJug.MaxSize {
+		larger.Fill()
+		e := larger.Transfer(zJug)
+		if e != nil {
 			break
 		}
-
-		time.Sleep(time.Second * 1)
 	}
+
+	for {
+		smaller.Fill()
+		e := smaller.Transfer(zJug)
+		if e != nil {
+			break
+		}
+	}
+
+	fmt.Println(xJug.String())
+	fmt.Println(yJug.String())
+	fmt.Println(zJug.String())
+
+	if zJug.GallonsOfWater == zJug.MaxSize {
+		return
+	}
+
+	fmt.Println("no solution")
 }
