@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"measure/args"
+	"measure/gallons"
 	"os"
 	"time"
 )
@@ -27,6 +28,7 @@ func main() {
 	argMap = args.ToMap()
 
 	if command == "gallons" {
+		gallons.HandleInput(argMap)
 	} else if command == "other" {
 	} else {
 	}
