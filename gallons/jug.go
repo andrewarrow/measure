@@ -1,17 +1,26 @@
 package gallons
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type Jug struct {
 	GallonsOfWater int
 	MaxSize        int
+	Name           string
 }
 
-func NewJug(max int) *Jug {
+func NewJug(name string, max int) *Jug {
 	j := Jug{}
 	j.MaxSize = max
+	j.Name = name
 	j.GallonsOfWater = 0
 	return &j
+}
+
+func (j *Jug) String() string {
+	return fmt.Sprintf("JUG %s MAX %d CURRENT %d", j.Name, j.MaxSize, j.GallonsOfWater)
 }
 
 func (j *Jug) Fill() {

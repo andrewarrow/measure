@@ -24,9 +24,11 @@ func HandleInput(argMap map[string]string) {
 		return
 	}
 
-	xJug := NewJug(xGallons)
-	yJug := NewJug(yGallons)
-	zJug := NewJug(zGallons)
+	xJug := NewJug("x", xGallons)
+	yJug := NewJug("y", yGallons)
+	zJug := NewJug("z", zGallons)
 
-	fmt.Println("Input", xJug, yJug, zJug)
+	fmt.Println(xJug.String())
+	fmt.Println(yJug.String())
+	fmt.Println(zJug.String())
 }
