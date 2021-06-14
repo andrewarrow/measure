@@ -26,7 +26,6 @@ func HandleInput(argMap map[string]string) {
 
 	xJug := NewJug("x", xGallons)
 	yJug := NewJug("y", yGallons)
-	zJug := NewJug("z", zGallons)
 
 	// start with larger of x and y
 	larger := xJug
@@ -38,42 +37,21 @@ func HandleInput(argMap map[string]string) {
 
 	fmt.Println(xJug.String())
 	fmt.Println(yJug.String())
-	fmt.Println(zJug.String())
 
-	fmt.Println("filling using the larger bucket...")
-	for {
-		larger.Fill()
-		fmt.Println(larger.String())
-		e := larger.Transfer(zJug)
-		if e != nil {
-			larger.Empty()
-			break
-		}
-		fmt.Println(larger.String())
-		fmt.Println(zJug.String())
-	}
-
-	fmt.Println("filling using the smaller bucket...")
-	for {
-		smaller.Fill()
-		fmt.Println(smaller.String())
-		e := smaller.Transfer(zJug)
-		if e != nil {
-			smaller.Empty()
-			break
-		}
-		fmt.Println(smaller.String())
-		fmt.Println(zJug.String())
-	}
-	fmt.Println("")
-
+	larger.Fill()
+	left := larger.Transfer(smaller)
+	fmt.Println("left over", left)
+	smaller.Empty()
+	left = larger.Transfer(smaller)
+	fmt.Println("left over", left)
+	larger.Fill()
+	left = larger.Transfer(smaller)
+	fmt.Println("left over", left)
 	fmt.Println(xJug.String())
 	fmt.Println(yJug.String())
-	fmt.Println(zJug.String())
 
-	if zJug.GallonsOfWater == zJug.MaxSize {
+	if xJug.GallonsOfWater == zGallons || yJug.GallonsOfWater == zGallons {
 		return
 	}
-
 	fmt.Println("No Solution")
 }

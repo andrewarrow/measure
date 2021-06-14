@@ -33,11 +33,17 @@ func (j *Jug) Fill() error {
 func (j *Jug) Empty() {
 	j.GallonsOfWater = 0
 }
-func (j *Jug) Transfer(to *Jug) error {
-	if to.MaxSize >= to.GallonsOfWater+j.GallonsOfWater {
-		to.GallonsOfWater += j.GallonsOfWater
-		j.GallonsOfWater = 0
-		return nil
+func (j *Jug) Transfer(to *Jug) int {
+	for {
+		if to.GallonsOfWater == to.MaxSize {
+			break
+		}
+		if j.GallonsOfWater == 0 {
+			break
+		}
+		to.GallonsOfWater++
+		j.GallonsOfWater--
 	}
-	return errors.New("to jug isn't big enough")
+
+	return j.GallonsOfWater
 }
