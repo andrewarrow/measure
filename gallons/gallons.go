@@ -38,6 +38,36 @@ func HandleInput(argMap map[string]string) {
 	fmt.Println(xJug.String())
 	fmt.Println(yJug.String())
 
+	largeSum := 0
+	largeN := 0
+	for {
+		if largeSum+larger.MaxSize > zGallons {
+			break
+		}
+		largeSum += larger.MaxSize
+		largeN++
+	}
+
+	if largeSum == zGallons {
+		fmt.Println("simple solution, use large bucket", largeN, "times.")
+		return
+	}
+
+	smallSum := largeSum
+	smallN := 0
+	for {
+		if smallSum+smaller.MaxSize > zGallons {
+			break
+		}
+		smallSum += smaller.MaxSize
+		smallN++
+	}
+
+	if smallSum == zGallons {
+		fmt.Println("simple solution, use large bucket", largeN, "times and smaller bucket", smallN, "times.")
+		return
+	}
+
 	larger.Fill()
 	left := larger.Transfer(smaller)
 	fmt.Println("left over", left)
@@ -50,7 +80,12 @@ func HandleInput(argMap map[string]string) {
 	fmt.Println(xJug.String())
 	fmt.Println(yJug.String())
 
-	if xJug.GallonsOfWater == zGallons || yJug.GallonsOfWater == zGallons {
+	if smaller.GallonsOfWater == zGallons {
+		fmt.Println("smaller bucket now has", zGallons)
+		return
+	}
+	if larger.GallonsOfWater == zGallons {
+		fmt.Println("larger bucket now has", zGallons)
 		return
 	}
 	fmt.Println("No Solution")
